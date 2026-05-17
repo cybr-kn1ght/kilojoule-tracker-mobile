@@ -1,0 +1,52 @@
+## .NET
+bin/
+obj/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.csproj.user
+*.dbmdl
+*.jfm
+
+## NuGet
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nupkg
+**/[Pp]ackages/repositories.config
+packages/
+
+## Visual Studio
+.vs/
+*.sln.docstates
+
+## JetBrains Rider
+.idea/
+*.sln.iml
+
+## macOS
+.DS_Store
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## .NET MAUI / Android
+*.apk
+*.aab
+*.msi
+*.msp
+
+## dotnet test
+coverage/
+*.trx

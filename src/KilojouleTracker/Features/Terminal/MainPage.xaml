@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:terminal="clr-namespace:KilojouleTracker.Features.Terminal"
+             xmlns:terminalCore="clr-namespace:KilojouleTracker.Features.Terminal;assembly=KilojouleTracker.Core"
+             x:Class="KilojouleTracker.Features.Terminal.MainPage"
+             BackgroundColor="#0D0D0D"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <terminal:TerminalLineStyleConverter x:Key="StyleColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,Auto,Auto">
+
+        <!-- Terminal Output -->
+        <CollectionView Grid.Row="0"
+                        x:Name="OutputList"
+                        ItemsSource="{Binding Output}"
+                        BackgroundColor="Transparent"
+                         SelectionMode="None"
+                         ItemsUpdatingScrollMode="KeepLastItemInView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="terminalCore:TerminalLine">
+                    <Label Text="{Binding Text}"
+                           TextColor="{Binding Style, Converter={StaticResource StyleColorConverter}}"
+                           FontFamily="monospace"
+                           FontSize="14"
+                           LineBreakMode="NoWrap"
+                           HorizontalOptions="Start"
+                           Padding="12,2" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Suggestion Popup -->
+        <VerticalStackLayout Grid.Row="1"
+                             IsVisible="{Binding ShowSuggestions}"
+                             BackgroundColor="#1A1A1A"
+                             Padding="8,0,8,0"
+                             MaximumHeightRequest="200">
+            <BindableLayout.ItemsSource>
+                <Binding Path="Suggestions" />
+            </BindableLayout.ItemsSource>
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <Label Text="{Binding .}"
+                           TextColor="#00FF41"
+                           FontFamily="monospace"
+                           FontSize="14"
+                           Padding="12,6"
+                           BackgroundColor="#222222">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type terminal:MainPage}}, Path=BindingContext.SelectSuggestionCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+
+        <!-- Input Bar -->
+        <Border Grid.Row="2"
+                BackgroundColor="#1A1A1A"
+                Padding="12,8"
+                StrokeThickness="0">
+            <Grid ColumnDefinitions="Auto,*">
+                <Label Text="&gt; "
+                       TextColor="#00FF41"
+                       FontFamily="monospace"
+                       FontSize="16"
+                       VerticalOptions="Center" />
+                <Entry Grid.Column="1"
+                       x:Name="InputEntry"
+                       Text="{Binding InputText}"
+                       Placeholder="type number or command..."
+                       PlaceholderColor="#444444"
+                       TextColor="#00FF41"
+                       BackgroundColor="Transparent"
+                       FontFamily="monospace"
+                       FontSize="16"
+                       ReturnCommand="{Binding SubmitCommand}"
+                       ReturnType="Done" />
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>

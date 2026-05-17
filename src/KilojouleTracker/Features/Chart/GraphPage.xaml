@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:chart="clr-namespace:KilojouleTracker.Features.Chart"
+             x:Class="KilojouleTracker.Features.Chart.GraphPage"
+             x:DataType="chart:GraphViewModel"
+             BackgroundColor="#0D0D0D"
+             Shell.NavBarIsVisible="False">
+
+    <Grid BackgroundColor="Transparent">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding DismissCommand}" />
+        </Grid.GestureRecognizers>
+
+        <ScrollView Orientation="Both">
+            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="0">
+                <Label Text="{Binding ChartTitle}"
+                       TextColor="#888888"
+                       FontFamily="monospace"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,8"/>
+
+                <Label Text="{Binding AverageLabel}"
+                       TextColor="#555555"
+                       FontFamily="monospace"
+                       FontSize="10"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,16"/>
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding ChartData.Rows}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <Label Text="{Binding .}"
+                                   TextColor="#00FF41"
+                                   FontFamily="monospace"
+                                   FontSize="11"
+                                   HorizontalOptions="Center" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Label Text="tap anywhere to close"
+                       TextColor="#444444"
+                       FontFamily="monospace"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       Margin="0,24,0,0"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
